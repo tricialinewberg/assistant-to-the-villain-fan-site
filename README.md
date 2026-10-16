@@ -4,7 +4,35 @@
 
 An original web-design portfolio case inspired by Hannah Nicole Maehrer's *Assistant to the Villain* series. The project brings the designer's **existing** UI to life: an atmospheric welcome, a manor-themed home page, books and author section, character dossiers, and interactive quizzes.
 
-> **Current status:** Design handoff prepared. Website implementation is pending. **Do not treat this repository as a deployed or completed product.**
+> **Current status:** React implementation available for visual review. Not deployed. Quiz questions other than Q07, scoring, original artwork exports, and visual signoff remain pending.
+
+## Run locally
+
+Use Node.js 24 (minimum 22.18 for native TypeScript configuration loading).
+
+```sh
+npm ci
+npm run dev
+npm run typecheck
+npm test
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+Open `http://127.0.0.1:5173`. Windows Playwright uses installed Microsoft Edge; other platforms use Playwright Chromium. The build uses Vite 8 with native config loading and preserved symlinks to avoid restricted Windows child-process path probes. No backend, credentials, or external fonts are required.
+
+The GitHub Actions quality workflow runs build, typecheck, unit tests, Playwright keyboard/touch/reduced-motion tests, axe audits, and screenshot capture. It uploads a `manor-visual-review` artifact; it does not deploy anything.
+
+The local-only `/tests/browser-audit.html` harness checks eight widths and ten routes, plus axe at mobile and desktop sizes. It is excluded from the production build. See [visual review and QA](docs/IMPLEMENTATION_REVIEW.md) and [asset ledger](docs/ASSET_LEDGER.md).
+
+## Quiz review
+
+`/quizzes/hiring/assessment?question=7` opens the approved Q07 prototype. The other 17 slots explicitly await copy and cannot be answered. Progress is **valid answers / 18**, so one answer is 5.6%; it never implies that unapproved questions were completed. Answers persist in session storage, with an in-memory fallback. The review screen preserves answers and supports restart; no invented hiring score or outcome is shown.
+
+## Vercel preparation
+
+Framework: Vite. Build: `npm run build`. Output: `dist`. Node: 24. `vercel.json` provides SPA deep-link fallback. The user controls the first publication after visual review.
 
 ## Design-first implementation
 

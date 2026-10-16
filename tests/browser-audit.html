@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><meta charset="UTF-8"><title>Manor local QA</title><body><h1>Local browser QA</h1><p id="status">Running…</p><pre id="results"></pre><iframe title="Site under test" id="site" style="border:0;height:900px"></iframe><script type="module">
+import axe from 'axe-core';
+const routes=['/','/home','/history','/characters','/quizzes','/quizzes/hiring','/quizzes/hiring/assessment?question=7','/quizzes/hiring/review','/quizzes/power','/credits'];
+const frame=document.querySelector('iframe');const results=[];
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+for(const width of [320,375,390,768,1024,1280,1440,1920]){
+ frame.style.width=width+'px';
+ for(const route of routes){
+  await new Promise(resolve=>{frame.onload=resolve;frame.src=route;});await wait(500);await frame.contentDocument.fonts.ready;
+  const doc=frame.contentDocument;
+  const overflow=doc.documentElement.scrollWidth>width;
+  const broken=[...doc.images].filter(img=>!img.complete||!img.naturalWidth).map(img=>img.src);
+  let violations=[];
+  if(width===390||width===1280){
+   const script=doc.createElement('script');script.textContent=axe.source;doc.head.appendChild(script);
+   const audit=await frame.contentWindow.axe.run(doc,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}});
+   violations=audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}));
+  }
+  results.push({width,route,overflow,broken,violations});document.querySelector('#status').textContent=`Completed ${results.length} / 80`;
+  document.querySelector('#results').textContent=JSON.stringify(results,null,2);
+ }
+}
+await new Promise(resolve=>{frame.onload=resolve;frame.src='/characters';});frame.style.width='390px';await wait(500);
+const region=frame.contentDocument.querySelector('.carousel');
+const begin=new frame.contentWindow.Event('touchstart',{bubbles:true});Object.defineProperty(begin,'touches',{value:[{clientX:300}]});region.dispatchEvent(begin);
+const end=new frame.contentWindow.Event('touchend',{bubbles:true});Object.defineProperty(end,'changedTouches',{value:[{clientX:80}]});region.dispatchEvent(end);await wait(500);
+results.push({test:'synthetic touch swipe',passed:frame.contentDocument.querySelector('.staff-card h2').textContent==='Trystan Maverine'});
+const reducedRules=[...frame.contentDocument.styleSheets].flatMap(sheet=>{try{return [...sheet.cssRules].map(r=>r.cssText)}catch{return []}}).filter(t=>t.includes('prefers-reduced-motion'));
+results.push({test:'reduced-motion stylesheet override present',passed:reducedRules.some(t=>/animation(?:-name)?:[^;}]*none/.test(t)&&/transition(?:-property)?:[^;}]*none/.test(t))});
+document.querySelector('#results').textContent=JSON.stringify(results,null,2);
+document.querySelector('#status').textContent='COMPLETE';
+</script></body></html>
+
+
+
