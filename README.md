@@ -75,3 +75,19 @@ Some illustrations, photographs and book covers are currently visible only insid
 - [Asset inventory and upload checklist](docs/ASSETS.md)
 - [Quiz implementation constraints](docs/QUIZ_CONTENT.md)
 - [Animation & acceptance criteria](docs/MOTION_AND_QA.md)
+
+## GitHub Pages staging (review site)
+
+After merging the approved implementation, enable **Settings → Pages → Source: GitHub Actions** once, then the `Publish fan site to GitHub Pages` workflow publishes automatically.
+
+Target: **https://tricialinewberg.github.io/assistant-to-the-villain-fan-site/** (only live after successful deployment).
+
+The workflow builds Vite with `VITE_BASE_PATH=/assistant-to-the-villain-fan-site/` and copies `index.html` to `404.html` for SPA route fallback. Deep links render client-side; GitHub Pages may initially answer such paths with HTTP 404 before React loads. Prefer entering via the site root for shareable URLs. Vercel retains its separate root-based build, with no additional environment value needed.
+
+## Original-book outbound links
+
+The four published volumes, the fifth listing and the author have direct Amazon Brazil links supplied by the designer. These are ordinary outbound references, not affiliate links; availability/price is not guaranteed by the site, and the fifth book remains marked as coming soon. No release date or cover for Book V has been invented.
+
+## Theatrical effects
+
+Desktop pointer movement and mobile finger movement produce a light layer of Trystan-inspired gray shadow mist. Deliberate click/tap activation adds a short gold/shadow burst. Kingsley occasionally enters with a note on Home and Quizzes and can be dismissed. Decorative layers never intercept native gestures. All effects respect reduced-motion preferences.

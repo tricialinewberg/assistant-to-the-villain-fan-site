@@ -24,8 +24,10 @@ import {
   type QuizState,
 } from "./quiz";
 import "./styles.css";
+import "./magic.css";
+import { MagicAtmosphere } from "./MagicAtmosphere";
 
-const asset = (name: string) => `/assets/${name}.png`;
+const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}.png`;
 const quizTitle = "Would you be hired by the Villain?";
 function Footer() {
   return (
@@ -97,43 +99,6 @@ function RouteEffects() {
     }
   }, [location.pathname, location.hash]);
   return null;
-}
-function Magic() {
-  const [spark, setSpark] = useState<{
-    x: number;
-    y: number;
-    key: number;
-  } | null>(null);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const click = (event: MouseEvent) => {
-      if (
-        !(event.target as HTMLElement).closest("a,button,label") ||
-        matchMedia("(prefers-reduced-motion: reduce)").matches
-      )
-        return;
-      setSpark({ x: event.clientX, y: event.clientY, key: Date.now() });
-      clearTimeout(timer);
-      timer = setTimeout(() => setSpark(null), 650);
-    };
-    document.addEventListener("click", click);
-    return () => {
-      document.removeEventListener("click", click);
-      clearTimeout(timer);
-    };
-  }, []);
-  return (
-    spark && (
-      <span
-        key={spark.key}
-        className="spark"
-        style={{ left: spark.x, top: spark.y }}
-        aria-hidden="true"
-      >
-        ✦
-      </span>
-    )
-  );
 }
 function Welcome() {
   return (
@@ -263,24 +228,28 @@ const books = [
     subtitle: "THE INSTANT #1 NEW YORK TIMES BESTSELLER",
     copy: "Once Upon a Time meets The Office in Hannah Maehrer’s laugh-out-loud viral TikTok series turned novel, about the sunshine assistant to an Evil Villain… and their unexpected romance.",
     color: "crimson",
+    purchaseUrl: "https://www.amazon.com.br/dp/1649375808",
   },
   {
     title: "Apprentice to the Villain",
     subtitle: "An Amazon Best Science Fiction & Fantasy Book of 2024",
     copy: "Evie Sage has never been happier to be the assistant to The Villain. Who would have thought that working for an outrageously handsome (shhh, bad for his brand) evil overlord could be so rewarding?",
     color: "purple",
+    purchaseUrl: "https://www.amazon.com.br/dp/1649377177",
   },
   {
     title: "Accomplice to the Villain",
     subtitle: "THE INSTANT #1 NEW YORK TIMES BESTSELLING SERIES",
     copy: "Evie Sage didn’t mean to become the right-hand woman to the kingdom’s most terrifying villain. One minute, she was applying for an entry-level position that promised “light paperwork and occasional beheadings,” and the next, she was knee-deep in magical mayhem.",
     color: "green",
+    purchaseUrl: "https://www.amazon.com.br/dp/1649378548",
   },
   {
     title: "Adversary to the Villain",
     subtitle: "THE INSTANT #1 NEW YORK TIMES BESTSELLING SERIES",
     copy: "Once Upon a Time meets The Office in the follow-up to the New York Times bestselling sensations Assistant to the Villain, Apprentice to the Villain, and Accomplice to the Villain by laugh-out-loud TikTok darling Hannah Nicole Maehrer.",
     color: "pink",
+    purchaseUrl: "https://www.amazon.com.br/dp/B0FSWD9QY4",
   },
 ];
 function History() {
@@ -311,11 +280,11 @@ function History() {
               <div className="book-bottom">
                 <span>● SERIES LIBRARY</span>
                 <a
-                  href="https://www.hannahnicolemaehrer.com/"
+                  href={book.purchaseUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Author’s website　→
+                  View on Amazon　→
                 </a>
               </div>
             </div>
@@ -337,6 +306,7 @@ function History() {
             </p>
             <div className="book-bottom">
               <span>DETAILS TO COME</span>
+              <a href="https://www.amazon.com.br/dp/1682818691" target="_blank" rel="noopener noreferrer">Amazon listing　→</a>
             </div>
           </div>
         </article>
@@ -356,11 +326,11 @@ function History() {
           </p>
           <a
             className="button outline"
-            href="https://www.hannahnicolemaehrer.com/"
+            href="https://www.amazon.com.br/stores/Hannah-Nicole-Maehrer/author/B0CDSMMGML"
             target="_blank"
             rel="noreferrer"
           >
-            LEARN MORE　→
+            AUTHOR ON AMAZON　→
           </a>
         </div>
       </section>
@@ -836,7 +806,7 @@ function App() {
         Skip to content
       </a>
       <RouteEffects />
-      <Magic />
+      <MagicAtmosphere />
       {!entry && <Header />}
       <Routes>
         <Route path="/" element={<Welcome />} />
@@ -857,7 +827,7 @@ function App() {
 }
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
