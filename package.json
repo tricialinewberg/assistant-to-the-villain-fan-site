@@ -1,0 +1,34 @@
+{
+  "name": "assistant-to-the-villain-fan-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --configLoader native",
+    "build": "tsc -b && vite build --configLoader native",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --configLoader native",
+    "test:e2e": "playwright test",
+    "preview": "vite preview --host 127.0.0.1 --configLoader native"
+  },
+  "dependencies": {
+    "@fontsource/cinzel": "^5.2.7",
+    "@fontsource/inter": "^5.2.8",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.56.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}
