@@ -129,10 +129,14 @@ test("mobile single-tap navigation, swipe, and reduced motion", async ({
     page.getByRole("heading", { name: "Evie Sage", exact: true }),
   ).toBeVisible();
   const carousel = page.locator(".carousel");
-  await carousel.dispatchEvent("touchstart", { touches: [{ clientX: 300 }] });
-  await carousel.dispatchEvent("touchend", {
-    changedTouches: [{ clientX: 90 }],
-  });
+  await carousel.scrollIntoViewIfNeeded();
+  const bounds = await carousel.boundingBox();
+  if (!bounds) throw new Error('Carousel must have visible bounds');
+  const touch = await context.newCDPSession(page);
+  const y = Math.max(1, bounds.y + 80);
+  await touch.send('Input.dispatchTouchEvent', {type:'touchStart',touchPoints:[{x:300,y}]});
+  await touch.send('Input.dispatchTouchEvent', {type:'touchMove',touchPoints:[{x:90,y}]});
+  await touch.send('Input.dispatchTouchEvent', {type:'touchEnd',touchPoints:[]});
   await expect(
     page.getByRole("heading", { name: "Trystan Maverine", exact: true }),
   ).toBeVisible();

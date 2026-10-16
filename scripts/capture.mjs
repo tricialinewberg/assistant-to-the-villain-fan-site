@@ -5,10 +5,10 @@ await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: process.platform === 'win32' ? 'msedge' : undefined });
 const screens = [
   ["01-entry", "/", 1280, 1024],
-  ["02-home", "/home", 1240, 2048],
-  ["03-history-books-author", "/history", 713, 2048],
+  ["02-home", "/home", 1212, 2048],
+  ["03-history-books-author", "/history", 1280, 2048],
   ["04-characters", "/characters", 1280, 1274],
-  ["05-quizzes-overview", "/quizzes", 1120, 2048],
+  ["05-quizzes-overview", "/quizzes", 1092, 2048],
   ["06-quiz-introduction", "/quizzes/hiring", 1280, 1144],
   ["07-quiz-question", "/quizzes/hiring/assessment?question=7", 1280, 1667],
 ];

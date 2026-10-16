@@ -5,6 +5,8 @@ All nine supplied reference PNGs have been moved without modification from `publ
 | Assets | Source | Treatment | Production state |
 |---|---|---|---|
 | Existing 14 icons, three portraits, castle-stone and forest-dark | User-supplied repository assets | Preserved as supplied; textures scale to match the compositions | Original exports/creator permissions not documented |
+| Three `*-complete` portraits | Staff reference screen | Complete 139×139 crops replace clipped supplied portrait files | Provisional source crops |
+| Four `*-trimmed` home icons and castle-stone-tile | Supplied individual assets | Removed surrounding flat margins to avoid dark halos and tile seams | Same source limitations as originals |
 | kingsley-1 through kingsley-4 | Visual Elements board | Small crops from the four supplied expressions | Provisional, low resolution, flattened background |
 | book-1 through book-4 | History screenshot | Crops of the designed cover placements | Provisional, low resolution; rights-holder permissions need confirmation |
 | author | History screenshot | Crop of the supplied author photograph | Provisional; original photo source/permission needs confirmation |
