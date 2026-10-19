@@ -126,7 +126,7 @@ Vercel uses the site's root path. GitHub Pages builds with the repository-specif
 
 [Portfolio](https://tricia-linewberg-portfolio.vercel.app/) · [LinkedIn](https://www.linkedin.com/in/tricia-linewberg/) · [GitHub](https://github.com/tricialinewberg)
 
-This is an **unofficial, non-commercial fan project** inspired by Hannah Nicole Maehrer's *Assistant to the Villain* series. It is not affiliated with or endorsed by the author, publisher, or other rights holders. Book covers, character depictions, and author photography belong to their respective rights holders.
+This is an **unofficial fan project** inspired by Hannah Nicole Maehrer's *Assistant to the Villain* series. It is not affiliated with or endorsed by the author, publisher, or other rights holders. Book covers, character depictions, and author photography belong to their respective rights holders.
 
 ---
 
