@@ -1,18 +1,95 @@
-# Assistant to the Villain — Fan Website
+<div align="center">
 
-**An interactive, mobile-first fan website, designed by Trícia Linewberg.**
+# Assistant to the Villain
+### Welcome to Massacre Manor
 
-An original web-design portfolio case inspired by Hannah Nicole Maehrer's *Assistant to the Villain* series. The project brings the designer's **existing** UI to life: an atmospheric welcome, a manor-themed home page, books and author section, character dossiers, and interactive quizzes.
+**An interactive, mobile-first fan experience inspired by Hannah Nicole Maehrer's fantasy series.**
 
-> **Current status:** React implementation available for visual review. Not deployed. Quiz questions other than Q07, scoring, original artwork exports, and visual signoff remain pending.
+Designed as an immersive digital world where storytelling, interface design, and playful interactions meet.
+
+**[Enter the Realm — Live on Vercel](https://assistant-to-the-villain-fan-site.vercel.app/)** · [GitHub Pages](https://tricialinewberg.github.io/assistant-to-the-villain-fan-site/) · [Explore the Design System](reference/boards/design-system.png)
+
+</div>
+
+---
+
+## The concept
+
+What if entering the Villain's manor felt like applying for a very questionable job?
+
+This independent UX/UI and web-design project brings the atmosphere of *Assistant to the Villain* into an interactive website. It combines a dark-fantasy visual identity with character dossiers, a book collection, whimsical quiz invitations, and a fictional hiring assessment.
+
+The experience is based on **seven original interface designs**, supported by a dedicated **design system** and **visual-elements library**. The website was then implemented as a responsive React application—not as a set of static screenshots.
+
+### Original interface design
+
+![Original desktop UI design for the Massacre Manor homepage](reference/screens/02-home.png)
+
+*Original desktop homepage design reference. The [live website](https://assistant-to-the-villain-fan-site.vercel.app/) is fully implemented and interactive.*
+
+## Explore the manor
+
+| Experience | What you'll find |
+| --- | --- |
+| **Welcome to Massacre Manor** | A cinematic entry scene and an invitation to enter the realm. |
+| **The History** | The series' books, illustrated cover presentations, links to Amazon Brazil, and information about the author. |
+| **Meet the Staff** | Character dossiers featuring Evie Sage, Trystan Maverine, Becky Erring, and Kingsley, presented in a responsive, keyboard-accessible carousel. |
+| **Discover Your Fate** | Four illustrated quiz invitations inspired by the world of Rennedawn. |
+| **The Hiring Assessment** | An 18-question interface with answer selection, progress, previous/next navigation, saved answers, and a review screen. |
+
+> **Quiz status:** The interface and state management are implemented, but only question **Q07** has approved question-and-answer copy. The other questions, final scoring, and results are intentionally unavailable until their content is finalized. The other three quiz concepts are marked *Coming Soon*.
+
+## Visual identity & motion
+
+The visual system takes inspiration from the fictional workplace at Massacre Manor:
+
+- **Color palette:** onyx, deep plum, Rennedawn purple, lilac, ancient gold, crimson, and frog-green accents.
+- **Typography:** Cinzel for the theatrical display language and Inter for readable interface text.
+- **Atmosphere:** castle-stone textures, a dark forest, paper notes, illustrated icons, and framed character artwork.
+- **Trystan-inspired shadows:** gray-purple smoke-like effects that respond to pointer movement and mobile gestures.
+- **Kingsley's cameos:** the crowned frog occasionally appears with a dismissible note.
+- **Interactive feedback:** golden and shadow-like bursts on clicks and taps, card transitions, and animated navigation details.
+
+The motion system uses lightweight browser animation APIs. Decorative effects are designed not to intercept scrolling, taps, or keyboard navigation, and respect the user's reduced-motion preference.
+
+## UX & implementation principles
+
+- **Mobile-first:** layouts adapt from narrow screens to larger desktop views.
+- **Accessibility-conscious:** semantic structure, visible focus states, keyboard controls, touch interactions, and reduced-motion handling.
+- **Design fidelity:** implemented from the original screens and UI specifications, rather than replacing them with a generic template.
+- **Real navigation:** React Router routes for the manor, books, characters, quizzes, and assessment.
+- **Honest UI states:** incomplete quizzes are clearly identified instead of displaying fabricated outcomes.
+- **No backend required:** the website is a static client-side application.
+
+Automated checks cover responsive overflow, navigation, quiz state, keyboard/touch interactions, and WCAG-oriented accessibility audits. These tests support the implementation but do not replace testing with real people and devices.
+
+## Built with
+
+| Area | Technologies |
+| --- | --- |
+| **Interface** | React 19, TypeScript, React Router |
+| **Tooling** | Vite 8 |
+| **Styling & motion** | Custom CSS, Web Animations API, responsive layouts |
+| **Typography** | Cinzel and Inter via Fontsource |
+| **Testing** | Vitest, Playwright, axe-core |
+| **CI & hosting** | GitHub Actions, Vercel, GitHub Pages |
 
 ## Run locally
 
-Use Node.js 24 (minimum 22.18 for native TypeScript configuration loading).
+Requires **Node.js 24** (minimum supported by the project: 22.18).
 
-```sh
+```bash
+git clone https://github.com/tricialinewberg/assistant-to-the-villain-fan-site.git
+cd assistant-to-the-villain-fan-site
 npm ci
 npm run dev
+```
+
+Open **http://127.0.0.1:5173/**.
+
+For validation:
+
+```bash
 npm run typecheck
 npm test
 npm run build
@@ -20,74 +97,41 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Open `http://127.0.0.1:5173`. Windows Playwright uses installed Microsoft Edge; other platforms use Playwright Chromium. The build uses Vite 8 with native config loading and preserved symlinks to avoid restricted Windows child-process path probes. No backend, credentials, or external fonts are required.
+On Windows, the Playwright configuration uses an installed Microsoft Edge; on other platforms it uses Chromium.
 
-The GitHub Actions quality workflow runs build, typecheck, unit tests, Playwright keyboard/touch/reduced-motion tests, axe audits, and screenshot capture. It uploads a `manor-visual-review` artifact; it does not deploy anything.
+## Project documentation
 
-The local-only `/tests/browser-audit.html` harness checks eight widths and ten routes, plus axe at mobile and desktop sizes. It is excluded from the production build. See [visual review and QA](docs/IMPLEMENTATION_REVIEW.md) and [asset ledger](docs/ASSET_LEDGER.md).
+The repository preserves the original design references and implementation notes:
 
-## Quiz review
+- [Original interface screens](reference/screens/)
+- [Design System — Rennedawn UI Kit](reference/boards/design-system.png)
+- [Visual Elements, Textures & UI Copy](reference/boards/visual-elements.png)
+- [Screens and user flows](docs/SCREENS_AND_FLOWS.md)
+- [Motion design & accessibility checks](docs/MOTION_AND_QA.md)
+- [Asset inventory and limitations](docs/ASSET_LEDGER.md)
 
-`/quizzes/hiring/assessment?question=7` opens the approved Q07 prototype. The other 17 slots explicitly await copy and cannot be answered. Progress is **valid answers / 18**, so one answer is 5.6%; it never implies that unapproved questions were completed. Answers persist in session storage, with an in-memory fallback. The review screen preserves answers and supports restart; no invented hiring score or outcome is shown.
+The visual references are source material for the implementation; they are not used as static page backgrounds. Some illustrations and cover images remain provisional crops pending suitable high-resolution, appropriately sourced assets.
 
-## Vercel preparation
+## Live versions
 
-Framework: Vite. Build: `npm run build`. Output: `dist`. Node: 24. `vercel.json` provides SPA deep-link fallback. The user controls the first publication after visual review.
+**Primary:** [assistant-to-the-villain-fan-site.vercel.app](https://assistant-to-the-villain-fan-site.vercel.app/)
 
-## Design-first implementation
+**Alternative:** [GitHub Pages](https://tricialinewberg.github.io/assistant-to-the-villain-fan-site/)
 
-The authoritative references are **seven supplied desktop screens**, the **Design System** board and the **Visual Elements, Textures & UI Copy** board. These images are being prepared for upload under `reference/`; the repository documentation describes them in detail.
+Vercel uses the site's root path. GitHub Pages builds with the repository-specific Vite base path through GitHub Actions.
 
-**For Codex:** Read [AGENTS.md](AGENTS.md) first, followed by [Screens and flows](docs/SCREENS_AND_FLOWS.md), [Design system](docs/DESIGN_SYSTEM.md), [Assets](docs/ASSETS.md), [Quiz content](docs/QUIZ_CONTENT.md) and [Motion & QA](docs/MOTION_AND_QA.md). Implement the reference layouts, **not a reinterpretation**.
+## Creator & disclaimer
 
-## Planned experience
+**Original UX/UI design, design system, concept, and art direction:** [Trícia Linewberg](https://tricia-linewberg-portfolio.vercel.app/)
 
-- Cinematic **Welcome to Massacre Manor** entry and meaningful Enter the realm CTA.
-- Home with route cards for **The History**, **Characters**, **Quizzes** and **The Author**.
-- Books, author information and independently verified outbound purchasing/reading links.
-- Accessible character carousel with illustration assets from the designer.
-- Four quiz entry cards; the hiring quiz includes an 18-question stateful engine, progress, review, results and restart (final quiz scripts/scoring await approval).
-- Dark-plum castle textures, crimson accents, lilac typography, gold light, frog-green badges and custom magical motion.
-- Responsive layout built mobile-first; full keyboard, touch and reduced-motion support.
+[Portfolio](https://tricia-linewberg-portfolio.vercel.app/) · [LinkedIn](https://www.linkedin.com/in/tricia-linewberg/) · [GitHub](https://github.com/tricialinewberg)
 
-## Proposed stack
+This is an **unofficial, non-commercial fan project** inspired by Hannah Nicole Maehrer's *Assistant to the Villain* series. It is not affiliated with or endorsed by the author, publisher, or other rights holders. Book covers, character depictions, and author photography belong to their respective rights holders.
 
-React, TypeScript, Vite, authored CSS and Playwright; static site, no backend. Deployment target: **Vercel** (not yet deployed).
+---
 
-## Reference source and fidelity
+<div align="center">
 
-Desktop art direction must closely match the supplied screens at their exact frame dimensions, including composition, typography, card proportions, colors, imagery and spacing. The Design System and Visual Elements boards govern reusable tokens and assets. Screenshots are **comparison references**, never to be embedded as static clickable pages.
+*Discretion is essential. Excellent benefits.*
 
-No mobile mockups have been supplied: adapt the existing design responsibly from 320px up instead of pretending it has an approved pixel-perfect mobile layout.
-
-Some illustrations, photographs and book covers are currently visible only inside screenshots. Low-resolution crops are temporary and must be replaced with authorized high-quality source exports whenever possible. Keep an asset/source ledger; do not pass off AI-generated or third-party substitutes as user originals.
-
-## Project authorship and disclaimer
-
-**Design and concept:** Trícia Linewberg.
-
-**Unofficial fan project.** Not affiliated with or endorsed by Hannah Nicole Maehrer, the publisher or rights holders. Book covers, author photos and adapted character depictions remain subject to their respective rights. Avoid copying substantial book passages.
-
-## Links
-
-- [Design specification](docs/DESIGN_SYSTEM.md)
-- [Screens and navigation](docs/SCREENS_AND_FLOWS.md)
-- [Asset inventory and upload checklist](docs/ASSETS.md)
-- [Quiz implementation constraints](docs/QUIZ_CONTENT.md)
-- [Animation & acceptance criteria](docs/MOTION_AND_QA.md)
-
-## GitHub Pages staging (review site)
-
-After merging the approved implementation, enable **Settings → Pages → Source: GitHub Actions** once, then the `Publish fan site to GitHub Pages` workflow publishes automatically.
-
-Target: **https://tricialinewberg.github.io/assistant-to-the-villain-fan-site/** (only live after successful deployment).
-
-The workflow builds Vite with `VITE_BASE_PATH=/assistant-to-the-villain-fan-site/` and copies `index.html` to `404.html` for SPA route fallback. Deep links render client-side; GitHub Pages may initially answer such paths with HTTP 404 before React loads. Prefer entering via the site root for shareable URLs. Vercel retains its separate root-based build, with no additional environment value needed.
-
-## Original-book outbound links
-
-The four published volumes, the fifth listing and the author have direct Amazon Brazil links supplied by the designer. These are ordinary outbound references, not affiliate links; availability/price is not guaranteed by the site, and the fifth book remains marked as coming soon. No release date or cover for Book V has been invented.
-
-## Theatrical effects
-
-Desktop pointer movement and mobile finger movement produce a light layer of Trystan-inspired gray shadow mist. Deliberate click/tap activation adds a short gold/shadow burst. Kingsley occasionally enters with a note on Home and Quizzes and can be dismissed. Decorative layers never intercept native gestures. All effects respect reduced-motion preferences.
+</div>
